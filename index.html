@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <title>GIF Optimizer</title>
   </head>
   <body>
     <h1>GIF Optimizer</h1>
+    <div id="preview" style=""></div>
     <table>
       <td>
         <p>width</p>
       </td>
       <td>
-        <input></input>
+        <input id="width" class="dimensions"></input>
       </td>
       <td>
         <p>height</p>
       </td>
       <td>
-        <input></input>
+        <input id="height" class="dimensions"></input>
       </td>
+      <tr>
+        <td>
+          <p>framerate</p>
+        </td>
+        <td>
+          <input id="fps" value="1" class="dimensions">1</input>
+        </td>
+      </tr>
     </table>
-    <input id="file_picker" type='file' multiple></input>
+    <input id="file_picker" type='file'></input>
     <h3>Drag and Drop Files in the Window.</h3>
     <div id="logbox"></div>
+    <button id="start">Start</button>
     <script src="index.js"></script>
   </body>
 </html>
