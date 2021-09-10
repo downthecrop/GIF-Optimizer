@@ -23,9 +23,17 @@ document.addEventListener('dragleave', (event) => {
     console.log('File has left the Drop Space');
 });
 
+document.getElementById('file_picker').onchange = function() {
+  let f = document.getElementById('file_picker').files
+  console.log(f)
+  for (let i = 0; i < f.length; i += 1){
+    document.getElementById("logbox").innerHTML += f[i].path + "\n";
+  }
+};
+
 function test(){
     const execFile = require('child_process').execFile;
-    const child = execFile('node', ['--version'], (err, stdout, stderr) => {
+    const child = execFile('ffmpeg.exe', ['--version'], (err, stdout, stderr) => {
       if (err) {
         throw err;
       }
