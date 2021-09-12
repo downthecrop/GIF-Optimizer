@@ -21,12 +21,15 @@
       <td>
         <input id="height" class="dimensions"></input>
       </td>
+      <td>
+        <input id="aspect" type="checkbox" checked>Maintain aspect ratio</input>
+      </td>
       <tr>
         <td>
           <p>framerate</p>
         </td>
         <td>
-          <input id="fps" value="1" class="dimensions">1</input>
+          <input id="fps" value="1" class="dimensions"></input>
         </td>
       </tr>
     </table>
@@ -34,6 +37,7 @@
     <h3>Drag and Drop Files in the Window.</h3>
     <div id="logbox"></div>
     <button id="start">Start</button>
+    <div id="hidden" style="display: none;"></div>
     <script src="index.js"></script>
   </body>
 </html>
