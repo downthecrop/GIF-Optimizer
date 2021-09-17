@@ -36,11 +36,11 @@ document.getElementById('file_picker').onchange = function() {
 };
 
 function setFile(f) {
+    
     let preview = document.getElementById("preview")
     if (preview.firstChild) {
         preview.removeChild(preview.firstChild)
     }
-
 
     console.log(f)
     let images
@@ -52,34 +52,29 @@ function setFile(f) {
     else {
         images = document.createElement('video');
     }
-    images.onload = function() {
-        if (ftype == "mp4") {
-            getVideoDimensionsOf(inFile).then((result) => setWidthHeight(result.width, result.height));
-        } else {
-            console.log("Image Size", images.naturalWidth, images.naturalWidth)
-            setWidthHeight(images.naturalWidth, images.naturalHeight);
-        }
-    }
-
-    images.onloadstart = function() {
-        if (ftype == "mp4") {
-            getVideoDimensionsOf(inFile).then((result) => setWidthHeight(result.width, result.height));
-        }
-    }
-
     images.src = f.path
     images.id = "myImage"
     inFile = f.path
 
-    // Add image to the DOM just so we can get its width and height
-    // then immediately remove it.
+
+    // Handler for GIF inputs
+    images.onload = function() {
+        console.log("Image Size", images.naturalWidth, images.naturalWidth)
+        setWidthHeight(images.naturalWidth, images.naturalHeight);
+    }
+    
+    // Handler for video inputs
+    images.onloadstart = function() {
+        getVideoDimensionsOf(inFile).then((result) => setWidthHeight(result.width, result.height));
+    }
+
     preview.appendChild(images);
 
+    // Load video files
     if (ftype == "mp4") {
         document.getElementById("myImage").autoplay = true
         document.getElementById("myImage").load()
     }
-
     document.getElementById("logbox").innerHTML += f.path + "\n";
 }
 
@@ -114,17 +109,21 @@ function getVideoDimensionsOf(url) {
 }
 
 document.getElementById("width").onchange = function() {
-    let width = document.getElementById("width")
-    let d = aspectRatio(width.value, 1)
-    console.log(d)
-    height.value = d[1]
+    if (document.getElementById("aspect").checked){
+        let width = document.getElementById("width")
+        let d = aspectRatio(width.value, 1)
+        console.log(d)
+        height.value = d[1]
+    }
 }
 
 document.getElementById("height").onchange = function() {
-    let height = document.getElementById("height")
-    let d = aspectRatio(1, height.value)
-    console.log(d)
-    width.value = d[0]
+    if (document.getElementById("aspect").checked){
+        let height = document.getElementById("height")
+        let d = aspectRatio(1, height.value)
+        console.log(d)
+        width.value = d[0]
+    }
 }
 
 document.getElementById('start').onclick = function() {
