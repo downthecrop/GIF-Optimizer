@@ -31,48 +31,49 @@ document.addEventListener('dragleave', (event) => {
     console.log('File has left the Drop Space');
 });
 
-document.getElementById('file_picker').onchange = function() {
+document.getElementById('file_picker').onchange = function () {
     setFile(document.getElementById('file_picker').files[0])
 };
 
 function setFile(f) {
-    
+
     let preview = document.getElementById("preview")
     if (preview.firstChild) {
         preview.removeChild(preview.firstChild)
     }
 
     console.log(f)
-    let images
+    let input
     let ftype = f.path.split(".")
     ftype = ftype[ftype.length - 1]
 
     if (ftype == "gif")
-        images = document.createElement('img');
+        input = document.createElement('img');
     else {
-        images = document.createElement('video');
+        input = document.createElement('video');
     }
-    images.src = f.path
-    images.id = "myImage"
+    input.src = f.path
+    input.id = "myImage"
     inFile = f.path
 
 
     // Handler for GIF inputs
-    images.onload = function() {
-        console.log("Image Size", images.naturalWidth, images.naturalWidth)
-        setWidthHeight(images.naturalWidth, images.naturalHeight);
+    input.onload = function () {
+        console.log("Image Size", input.naturalWidth, input.naturalWidth)
+        setWidthHeight(input.naturalWidth, input.naturalHeight);
     }
-    
+
     // Handler for video inputs
-    images.onloadstart = function() {
+    input.onloadstart = function () {
         getVideoDimensionsOf(inFile).then((result) => setWidthHeight(result.width, result.height));
     }
 
-    preview.appendChild(images);
+    preview.appendChild(input);
 
     // Load video files
     if (ftype == "mp4") {
         document.getElementById("myImage").autoplay = true
+        document.getElementById("myImage").muted = true
         document.getElementById("myImage").load()
     }
     document.getElementById("logbox").innerHTML += f.path + "\n";
@@ -92,7 +93,7 @@ function getVideoDimensionsOf(url) {
         const video = document.createElement('video');
 
         // place a listener on it
-        video.addEventListener("loadedmetadata", function() {
+        video.addEventListener("loadedmetadata", function () {
             // retrieve dimensions
             const height = this.videoHeight;
             const width = this.videoWidth;
@@ -108,8 +109,8 @@ function getVideoDimensionsOf(url) {
     });
 }
 
-document.getElementById("width").onchange = function() {
-    if (document.getElementById("aspect").checked){
+document.getElementById("width").onchange = function () {
+    if (document.getElementById("aspect").checked) {
         let width = document.getElementById("width")
         let d = aspectRatio(width.value, 1)
         console.log(d)
@@ -117,8 +118,8 @@ document.getElementById("width").onchange = function() {
     }
 }
 
-document.getElementById("height").onchange = function() {
-    if (document.getElementById("aspect").checked){
+document.getElementById("height").onchange = function () {
+    if (document.getElementById("aspect").checked) {
         let height = document.getElementById("height")
         let d = aspectRatio(1, height.value)
         console.log(d)
@@ -126,11 +127,12 @@ document.getElementById("height").onchange = function() {
     }
 }
 
-document.getElementById('start').onclick = function() {
+document.getElementById('start').onclick = function () {
     let w = document.getElementById("width").value;
     let h = document.getElementById("height").value;
     let fps = document.getElementById("fps").value;
-    let command = `-i ${inFile} -filter_complex fps=${fps},scale=${w}:${h}:flags=fast_bilinear,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse=dither=sierra2_4a output.gif`
+    let outFile = inFile.split(".")[0] + "-" + w + "x" + h + ".gif"
+    let command = `-i ${inFile} -filter_complex fps=${fps},scale=${w}:${h}:flags=fast_bilinear,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse=dither=sierra2_4a ${outFile}`
 
     let myArgs = command.split(" ");
     const execFile = require('child_process').execFile;
@@ -140,4 +142,5 @@ document.getElementById('start').onclick = function() {
         }
         console.log(stdout);
     });
+    document.getElementById("logbox").innerHTML += "Saved to: " + outFile + "\n";
 }

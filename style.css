@@ -7,3 +7,9 @@
     height: 300px;
     object-fit: contain;
 }
+
+#preview video{
+    width: 400px;
+    height: 300px;
+    object-fit: contain;
+}
