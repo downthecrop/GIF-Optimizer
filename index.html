@@ -6,38 +6,29 @@
     <title>GIF Optimizer</title>
   </head>
   <body>
-    <h1>GIF Optimizer</h1>
-    <div id="preview" style=""></div>
+    <div id="preview">
+      <div id="introText">GIF Optimizer<br>Select a file or drag source to window..</div>
+    </div>
+    <input id="file_picker" type='file'></input>
     <table>
       <td>
-        <p>width</p>
+        Width <input id="width" class="dimensions"></input>
       </td>
       <td>
-        <input id="width" class="dimensions"></input>
+        Height <input id="height" class="dimensions"></input>
       </td>
       <td>
-        <p>height</p>
+        <input id="aspect" type="checkbox" checked>🔗</input>
       </td>
       <td>
-        <input id="height" class="dimensions"></input>
+        <p>FPS</p>
       </td>
       <td>
-        <input id="aspect" type="checkbox" checked>Maintain aspect ratio</input>
+        <input id="fps" value="15" class="dimensions"></input>
       </td>
-      <tr>
-        <td>
-          <p>framerate</p>
-        </td>
-        <td>
-          <input id="fps" value="15" class="dimensions"></input>
-        </td>
-      </tr>
     </table>
-    <input id="file_picker" type='file'></input>
-    <h3>Drag and Drop Files in the Window.</h3>
-    <div id="logbox"></div>
     <button id="start">Start</button>
-    <div id="hidden" style="display: none;"></div>
+    <div id="logbox"></div>
     <script src="index.js"></script>
   </body>
 </html>

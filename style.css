@@ -1,5 +1,46 @@
 .dimensions {
-    width: 45px;
+	background-color: #121212;
+    width: 50px;
+	border-radius: 4px;
+	border: none;
+	color:#aaa;
+}
+
+#start {
+	width: 100%;
+	font-size: 20px;
+	background-color: #332940;
+	border-radius: 4px;
+	color: #e9e8eb;
+	padding: 4px;
+	border: none;
+}
+
+#start:hover {
+	background-color: #524266;
+}
+
+#logbox{
+	padding-top: 10px;
+	font-size: 12px;
+	line-height: normal;
+}
+
+
+#introText {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 300px;
+}
+
+#preview {
+    width: 400px;
+    height: 300px;
+    border:#1a1a1a;
+    border-width: thin;
+    border-style: dashed;
+	border-radius: 4px;
 }
 
 #preview img{
@@ -8,8 +49,127 @@
     object-fit: contain;
 }
 
+::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
 #preview video{
     width: 400px;
     height: 300px;
     object-fit: contain;
+}
+
+body::-webkit-scrollbar {
+    width: 5px !important;
+    height: 5px !important;
+}
+body::-webkit-scrollbar-track {
+    background: #383838 !important;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #cfc9c5 !important;
+    border: 1px solid #1a1a1a !important;
+    border-radius: 1px !important;
+}
+
+@import 'https://fonts.googleapis.com/css?family=Roboto';
+
+* {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	line-height: 1.75em;
+	font-size: 16px;
+	background-color: #292929;
+	color: #aaa;
+}
+
+.simple-container {
+	max-width: 675px;
+	margin: 0 auto;
+	padding-top: 70px;
+	padding-bottom: 20px;
+}
+
+.simple-print {
+	fill: white;
+	stroke: white;
+}
+.simple-print svg {
+	height: 100%;
+}
+
+.simple-close {
+	color: white;
+	border-color: white;
+}
+
+.simple-ext-info {
+	border-top: 1px solid #aaa;
+}
+
+p {
+	font-size: 16px;
+}
+
+h1 {
+	font-size: 30px;
+	line-height: 34px;
+}
+
+h2 {
+	font-size: 20px;
+	line-height: 25px;
+}
+
+h3 {
+	font-size: 16px;
+	line-height: 27px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #D8D8D8;
+	border-top: 1px solid #D8D8D8;
+}
+
+hr {
+	height: 1px;
+	background-color: #d8d8d8;
+	border: none;
+	width: 100%;
+	margin: 0px;
+}
+
+a[href] {
+	color: #1e8ad6;
+}
+
+a[href]:hover {
+	color: #3ba0e6;
+}
+
+img {
+	max-width: 100%;
+}
+
+li {
+	line-height: 1.5em;
+}
+
+aside,
+[class *= "sidebar"],
+[id *= "sidebar"] {
+	max-width: 90%;
+	margin: 0 auto;
+	border: 1px solid lightgrey;
+	padding: 5px 15px;
+}
+
+@media (min-width: 1921px) {
+	body {
+		font-size: 18px;
+	}
 }

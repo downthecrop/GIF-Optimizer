@@ -1,0 +1,67 @@
+## Notes
+
+A GIF can only have 256 colors in it
+
+Good rescale algorithms gauss, lanczos
+
+
+
+
+Using a colour palette
+Another method of creating a GIF is by extracting a "colour palette" of the video first (see this excellent blog post from Cassidy K for more detailed information). The goal with this method is to create a base image and all the changes (movements) are applied as layers on top of the base image. This should greatly reduce the resulting GIF size.
+
+First to create a palette file:
+
+ck@mintp ~ $ ffmpeg -i in.gif -vf "fps=15,palettegen=stats_mode=diff" palette.png
+
+The created file is very small, simply containing color information:
+
+ck@mintp ~ $ du -h /tmp/palette.png
+4.0K    /tmp/palette.png
+
+When opening the palette file with an image viewer (here Nomacs) a 16x16 pixel colour table is showing:
+
+Exported colour palette from a video file
+Now using this palette another GIF can be created:
+
+ck@mintp ~ $ ffmpeg -i in.gif -i palette.png -lavfi "fps=10,paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle" output4.gif
+
+But looking at the image size of output4.gif, it looks as if this GIF resulted in an even bigger size:
+
+ck@mintp ~ $ du -h /tmp/output*
+1.1M    /tmp/output3.gif
+2.2M    /tmp/output4.gif
+
+
+Resize the original video
+As mentioned, GIFs (should be) are small in size but a recorded video with a high resolution (such as Full HD) are way too big. The source video should first be resized (scaled) to a more common GIF size. In this example, the video is scaled to a 320 pixel width and a dynamic height (keeping the same aspect ratio):
+
+ck@mintp ~ $ ffmpeg -i /tmp/VID_20200921_083738.mp4 -vf scale=320:-1 /tmp/Video.mp4
+
+The difference in size of the original (VID_20200921_083738.mp4) and the scaled video (Video.mp4) speaks for itself: 
+
+ck@mintp ~ $ du -h /tmp/V*
+15M    /tmp/VID_20200921_083738.mp4
+256K   /tmp/Video.mp4
+
+Resize
+ffmpeg -i input.gif -vf "scale=iw/2:ih/2" output.gif
+
+Resize???
+ffmpeg -y -i file.mp4 -i palette.png -filter_complex paletteuse -r 10 -s 320x480 file.gif
+
+
+# -1 will maintian aspect ratio
+
+
+ffmpeg -i in.gif -filter_complex "fps=1;scale=500:-1:flags=lanczos,palettegen=stats_mode=full" palette.png
+
+ffmpeg -i in.gif -vf "
+    fps=10,
+    scale=100:-1:flags=gauss,
+    split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 output.gif
+
+    ffmpeg -i in.gif -vf "fps=10,scale=500:-1:flags=fast_bilinear,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse=dither=sierra2_4a" -loop 0 output.gif
+
+
+ffmpeg -i in.gif -filter_complex "fps=10;scale=500:-1:flags=lanczos,split[v1][v2]; [v1]palettegen=stats_mode=full [palette];[v2]palette paletteuse=dither=sierra2_4a" output.gif
